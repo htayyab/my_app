@@ -16,6 +16,7 @@
     <link rel="icon" href="/icon.png" type="image/png">
     <link rel="icon" href="/icon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/icon.png">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
 
     <%# Includes all stylesheet files in app/assets/stylesheets %>
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
@@ -23,8 +24,31 @@
   </head>
 
   <body>
-    <main class="container mx-auto mt-28 px-5 flex">
-      <%= yield %>
-    </main>
-  </body>
+
+  <!-- Flash Messages Container - Fixed at top -->
+  <div class="position-fixed top-0 start-0 end-0" style="z-index: 1100;">
+    <% flash.each do |type, message| %>
+      <% 
+        alert_class = case type.to_sym
+          when :notice, :success then 'alert-success'
+          when :alert, :danger, :error then 'alert-danger'
+          when :warning then 'alert-warning'
+          else 'alert-info'
+        end
+      %>
+      <div class="alert <%= alert_class %> alert-dismissible fade show mb-0 rounded-0" role="alert">
+        <div class="container">
+          <%= message %>
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <main class="container mx-auto mt-28 px-5 flex">
+    <%= yield %>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous"></script>
+</body>
 </html>

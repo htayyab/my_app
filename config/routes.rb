@@ -6,6 +6,9 @@ Rails.application.routes.draw do
   get "signup", to: "users#new"
   get 'users/:id/edit', to: 'users#edit'
   patch 'users/:id', to: 'users#update'
+  get "login", to: "sessions#new"
+  post "login", to: "sessions#create"
+  delete "logout", to: "session#destroy"
   resources :users, except: [:new]
 
 end
